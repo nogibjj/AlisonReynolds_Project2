@@ -1,5 +1,6 @@
-# rust-new-project-template
-A good starting point for a new Rust project
+# Project 2 - Rust Microservice
+The goal for this project will be to show how data transformations can be used to find relationships between variables. The first iteration of this project has functions to read in the data, apply log and square root transforms, and plot the data. The next step is to add the actix framework for the microservice.
+
 
 ## References
 
