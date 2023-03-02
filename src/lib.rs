@@ -56,24 +56,13 @@ pub fn plot(x: Vec<f64>, y: Vec<f64>) {
         }
     }
 
-    // find min of min_x and min_y
-    let mut min = min_x;
-    if min_y < min_x {
-        min = min_y;
-    }
-    // find max of max_x and max_y
-    let mut max = max_x;
-    if max_y > max_x {
-        max = max_y;
-    }
-
     let mut ctx = ChartBuilder::on(&root_area)
         .set_label_area_size(LabelAreaPosition::Left, 55.0)
         .set_label_area_size(LabelAreaPosition::Bottom, 55.0)
         .set_label_area_size(LabelAreaPosition::Right, 55.0)
         .set_label_area_size(LabelAreaPosition::Top, 55.0)
         .caption("Scatter Plot", ("sans-serif", 45.0))
-        .build_cartesian_2d(min..max, min..max)
+        .build_cartesian_2d(min_x..max_x, min_y..max_y)
         .unwrap();
 
     ctx.configure_mesh().draw().unwrap();

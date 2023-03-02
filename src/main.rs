@@ -1,6 +1,7 @@
 // Build a actix microservice
 
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, App, HttpResponse, HttpServer, Responder, Result};
+use std::fs;
 
 //create a function that returns a hello world
 #[get("/")]
@@ -42,6 +43,14 @@ async fn sqrt_data() -> impl Responder {
         .body("Sqrt data")
 }
 
+#[get("/image")]
+async fn image() -> Result<HttpResponse> {
+    let image_data = fs::read("scatter.png")?;
+    Ok(HttpResponse::Ok()
+        .content_type("image/png")
+        .body(image_data))
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     //add a print message to the console that the service is running
@@ -51,6 +60,7 @@ async fn main() -> std::io::Result<()> {
             .service(hello)
             .service(log_data)
             .service(sqrt_data)
+            .service(image)
     })
     .bind("0.0.0.0:8080")?
     .run()
