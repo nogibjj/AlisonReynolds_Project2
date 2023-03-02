@@ -21,4 +21,4 @@ run:
 build-release:
 	cargo build --release
 
-all: format lint test run
+all: format-check lint test run

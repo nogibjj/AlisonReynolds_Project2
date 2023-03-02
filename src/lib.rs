@@ -1,3 +1,5 @@
+use plotters::prelude::*;
+
 // function to read in pressure.csv and return the temperature and pressure data
 pub fn read_pressure_data() -> (Vec<f64>, Vec<f64>) {
     let mut rdr = csv::Reader::from_path("pressure.csv").unwrap();
