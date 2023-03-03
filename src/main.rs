@@ -11,7 +11,7 @@ async fn hello() -> impl Responder {
 
 //create a function that log transforms and plots
 #[get("/log")]
-async fn log_data() -> impl Responder {
+async fn log_data() -> Result<HttpResponse> {
     //print helpful message
     println!("Converting the data to log");
     let (temp, pressure) = microservice::read_pressure_data();
@@ -20,14 +20,15 @@ async fn log_data() -> impl Responder {
 
     // run the plot function and show plot on the actix server
     microservice::plot(temp, log_press);
-    HttpResponse::Ok()
-        .content_type("scatter.png")
-        .body("Log data")
+    let image_data = fs::read("scatter.png")?;
+    Ok(HttpResponse::Ok()
+        .content_type("image/png")
+        .body(image_data))
 }
 
 //create a function that sqrt transforms and plots
 #[get("/sqrt")]
-async fn sqrt_data() -> impl Responder {
+async fn sqrt_data() -> Result<HttpResponse> {
     //print helpful message
     println!("Converting the data to sqrt");
     let (temp, pressure) = microservice::read_pressure_data();
@@ -38,13 +39,6 @@ async fn sqrt_data() -> impl Responder {
     microservice::plot(temp, sqrt_press);
 
     // HttpResponse::Ok().body("Sqrt data")
-    HttpResponse::Ok()
-        .content_type("scatter.png")
-        .body("Sqrt data")
-}
-
-#[get("/image")]
-async fn image() -> Result<HttpResponse> {
     let image_data = fs::read("scatter.png")?;
     Ok(HttpResponse::Ok()
         .content_type("image/png")
@@ -60,7 +54,6 @@ async fn main() -> std::io::Result<()> {
             .service(hello)
             .service(log_data)
             .service(sqrt_data)
-            .service(image)
     })
     .bind("0.0.0.0:8080")?
     .run()
