@@ -21,4 +21,16 @@ run:
 build-release:
 	cargo build --release
 
+build:
+	docker build -t microservice .
+
+build-hub:
+	docker build -t aliir/microservice .
+
+push-hub:
+	docker push aliir/microservice
+
+rundocker:
+	docker run -it --rm -p 8080:8080 microservice
+
 all: format-check lint test run
