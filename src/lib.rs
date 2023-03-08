@@ -57,18 +57,18 @@ pub fn plot(x: Vec<f64>, y: Vec<f64>) {
     }
 
     let mut ctx = ChartBuilder::on(&root_area)
-        .set_label_area_size(LabelAreaPosition::Left, 55.0)
-        .set_label_area_size(LabelAreaPosition::Bottom, 55.0)
-        .set_label_area_size(LabelAreaPosition::Right, 55.0)
-        .set_label_area_size(LabelAreaPosition::Top, 55.0)
-        .caption("Scatter Plot", ("sans-serif", 45.0))
+        .set_label_area_size(LabelAreaPosition::Left, 55)
+        .set_label_area_size(LabelAreaPosition::Bottom, 55)
+        .set_label_area_size(LabelAreaPosition::Right, 55)
+        .set_label_area_size(LabelAreaPosition::Top, 55)
+        .caption("Scatter Plot", ("sans-serif", 45))
         .build_cartesian_2d(min_x..max_x, min_y..max_y)
         .unwrap();
 
     ctx.configure_mesh().draw().unwrap();
 
     // Draw Scatter Plot
-    ctx.draw_series(data.iter().map(|point| Circle::new(*point, 4.0_f64, BLUE)))
+    ctx.draw_series(data.iter().map(|point| Circle::new(*point, 4, &BLUE)))
         .unwrap();
     root_area.present().unwrap();
     println!("Plot finished");
